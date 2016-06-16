@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>back.png</file>
+        <file>barrier1.png</file>
+        <file>barrier2.png</file>
+        <file>barrier3.png</file>
+        <file>bluebird.png</file>
+        <file>greenbird.png</file>
+        <file>GROUND.png</file>
+        <file>pig.png</file>
+        <file>redbird.png</file>
+        <file>stick.png</file>
+        <file>yellowbird.png</file>
+        <file>stone.png</file>
+    </qresource>
+</RCC>
