@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     // Enable the event Filter
     qApp->installEventFilter(this);
+    count = 1;
 }
 
 MainWindow::~MainWindow()
@@ -32,10 +33,11 @@ void MainWindow::showEvent(QShowEvent *)
 
 
     // Create bird (You can edit here 出發x,出發y,地板高,高,寬)
-    thisbird= new yellowbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/yellowbird.png").scaled(width()/16.0,height()/10.0),world,scene);
+    thisbird= new greenbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/yellowbird.png").scaled(width()/16.0,height()/10.0),world,scene);
     Bird* stone = new Stone(17.5f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene);
     Bird* stone1 = new Stone(17.8f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene);
     Bird* pig = new Pig(22.0f,2.7f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene);
+
 
     // Setting the Velocity
     itemList.push_back(thisbird);
@@ -57,6 +59,7 @@ bool MainWindow::eventFilter(QObject *, QEvent *event)
         thisbird->canmove = true;
         if(thisbird->func ==true){
             thisbird->press();
+            thisbird->canmove = false;
         }
     }
     if(event->type() == QEvent::MouseMove)
@@ -74,7 +77,7 @@ bool MainWindow::eventFilter(QObject *, QEvent *event)
     if(event->type() == QEvent::MouseButtonRelease)
     {
         if(thisbird->canmove == true){
-            thisbird->setLinearVelocity(b2Vec2(10.1,5));
+            thisbird->setLinearVelocity(b2Vec2(12,6));
             thisbird->func = true;
         }
     }
@@ -98,4 +101,25 @@ void MainWindow::QUITSLOT()
 {
     // For debug
     std::cout << "Quit Game Signal receive !" << std::endl ;
+}
+
+void MainWindow::newbird()
+{
+    count++;
+
+    switch (count) {
+    case 2:
+        delete thisbird;
+        thisbird = new redbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/redbird.png").scaled(width()/16.0,height()/10.0),world,scene);
+        break;
+    case 3:
+        delete thisbird;
+        thisbird = new bluebird(5.0f,10.0f,0.40f,&timer,QPixmap(":/bluebird.png").scaled(width()/16.0,height()/10.0),world,scene);
+        break;
+    case 4:
+        delete thisbird;
+        thisbird = new greenbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/greenbird.png").scaled(width()/16.0,height()/10.0),world,scene);
+        break;
+    }
+
 }

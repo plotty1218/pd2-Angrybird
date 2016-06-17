@@ -17,8 +17,12 @@ public:
     Bird(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene);
     void setLinearVelocity(b2Vec2 velocity);
     virtual void press()=0;
+    void startContact() { contact = true; }
+    void endContact() { contact = false; }
+    void render();
     bool canmove;
     bool func;
+    bool contact;
 };
 
 class Stone : public Bird{

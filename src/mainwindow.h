@@ -22,12 +22,15 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+   // friend class Bird;
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void showEvent(QShowEvent *);
     bool eventFilter(QObject *,QEvent *event);
     void closeEvent(QCloseEvent *);
+    void newbird();
 
 signals:
     // Signal for closing the game
@@ -44,6 +47,7 @@ private:
     QList<GameItem *> itemList;
     QTimer timer;
     Bird* thisbird;
+    int count;
 
 };
 

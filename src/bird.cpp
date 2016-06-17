@@ -32,6 +32,7 @@ Bird::Bird(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2Worl
     //i add
     canmove = false;
     func = false;
+    contact = false;
 }
 
 void Bird::setLinearVelocity(b2Vec2 velocity)
@@ -42,15 +43,15 @@ void Bird::setLinearVelocity(b2Vec2 velocity)
 void yellowbird::press()
 {
     setLinearVelocity(b2Vec2(5,-5));
-    canmove = false;
 }
 
 void bluebird::press()
 {
-
+    setLinearVelocity(b2Vec2(0,0));
 }
 
 void greenbird::press()
 {
-    this->setLinearVelocity(b2Vec2(0,5));
+    this->setLinearVelocity(b2Vec2(-5,5));
 }
+
