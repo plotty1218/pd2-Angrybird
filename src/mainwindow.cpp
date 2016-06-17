@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <unistd.h>
+#include <QGraphicsTextItem>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -29,22 +30,25 @@ void MainWindow::showEvent(QShowEvent *)
 
     itemList.push_back(new Land(16,1.6,32,3,QPixmap(":/GROUND.png").scaled(width(),height()/6.0),world,scene));
     itemList.push_back(new Barrier(17,4, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
-    itemList.push_back(new Barrier(5,4, 2.6, 3.4,QPixmap(":/stick.png").scaled(width()/13,height()/6),world,scene));
+    itemList.push_back(new Barrier(30,4, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
+    itemList.push_back(new Barrier(30,6, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
+    itemList.push_back(new Barrier(5,6, 0.001, 0.001,QPixmap(":/stick.png").scaled(width()/13,height()/6),world,scene));
 
 
     // Create bird (You can edit here 出發x,出發y,地板高,高,寬)
-    thisbird= new greenbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/yellowbird.png").scaled(width()/16.0,height()/10.0),world,scene);
-    Bird* stone = new Stone(17.5f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene);
-    Bird* stone1 = new Stone(17.8f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene);
-    Bird* pig = new Pig(22.0f,2.7f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene);
-
-
-    // Setting the Velocity
+    thisbird= new bluebird(5.0f,10.0f,0.40f,&timer,QPixmap(":/yellowbird.png").scaled(width()/16.0,height()/10.0),world,scene,1);
+    itemList.push_back(new Stone(17.5f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,2));
+    itemList.push_back(new Stone(17.8f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,2));
+    pig = new Pig(22.0f,2.7f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,0);
     itemList.push_back(thisbird);
-    itemList.push_back(stone);
-    itemList.push_back(stone1);
     itemList.push_back(pig);
 
+    myContactListenerInstance = new MyContactListener(pig);
+    world->SetContactListener(myContactListenerInstance);
+    score = new QGraphicsTextItem;
+    score->setPos(100,80);
+    score->setPlainText(QString::number(pig->score));
+    scene->addItem(score);
     // Timer
     connect(&timer,SIGNAL(timeout()),this,SLOT(tick()));
     connect(this,SIGNAL(quitGame()),this,SLOT(QUITSLOT()));
@@ -56,32 +60,31 @@ bool MainWindow::eventFilter(QObject *, QEvent *event)
     // Hint: Notice the Number of every event!
     if(event->type() == QEvent::MouseButtonPress)
     {
-        thisbird->canmove = true;
-        if(thisbird->func ==true){
-            thisbird->press();
-            thisbird->canmove = false;
-        }
+        if(thisbird->flied == false)
+            thisbird->canmove = true;
     }
     if(event->type() == QEvent::MouseMove)
     {
         /* TODO : add your code here */
         //std::cout << "Move !" << std::endl ;
-       /* if(thisbird->canmove==true)
-        {
-            if(event->buttons() & Qt::LeftButton)
-            {
-                this->move(mapToParent(event->pos() - thisbird->offset));
-            }
-        }*/
     }
     if(event->type() == QEvent::MouseButtonRelease)
     {
         if(thisbird->canmove == true){
             thisbird->setLinearVelocity(b2Vec2(12,6));
             thisbird->func = true;
+            thisbird->flied = true;
         }
     }
     return false;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent* event){
+    if((event->key() == Qt::Key_F && thisbird->func == true)){
+            thisbird->press();
+            thisbird->func = false;
+            thisbird->canmove = false;
+     }
 }
 
 void MainWindow::closeEvent(QCloseEvent *)
@@ -110,15 +113,15 @@ void MainWindow::newbird()
     switch (count) {
     case 2:
         delete thisbird;
-        thisbird = new redbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/redbird.png").scaled(width()/16.0,height()/10.0),world,scene);
+        thisbird = new redbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/redbird.png").scaled(width()/16.0,height()/10.0),world,scene,1);
         break;
     case 3:
         delete thisbird;
-        thisbird = new bluebird(5.0f,10.0f,0.40f,&timer,QPixmap(":/bluebird.png").scaled(width()/16.0,height()/10.0),world,scene);
+        thisbird = new bluebird(5.0f,10.0f,0.40f,&timer,QPixmap(":/bluebird.png").scaled(width()/16.0,height()/10.0),world,scene,1);
         break;
     case 4:
         delete thisbird;
-        thisbird = new greenbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/greenbird.png").scaled(width()/16.0,height()/10.0),world,scene);
+        thisbird = new greenbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/greenbird.png").scaled(width()/16.0,height()/10.0),world,scene,1);
         break;
     }
 
