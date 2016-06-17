@@ -46,26 +46,27 @@ public:
             score = 0;
     }
     virtual void press(){}
-    void  startContact(){
+    void startContact(){
         if(m_contacting == false){
-            score += 1000;
+            score +=1000;
             m_contacting = true;
          }
     }
-    void  endContact(){
+    void endContact(){
         if(m_contacting == true ){
             m_contacting = false;
          }
     }
     bool m_contacting ;
     int score;
+
 };
 
 class redbird : public Bird{
 public:
     redbird(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
         Bird(x,y,radius,timer,pixmap,world,scene,input){}
-    virtual void press(){}
+    virtual void press();
 };
 
 class yellowbird : public Bird{
@@ -73,8 +74,6 @@ public:
     yellowbird(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
         Bird(x,y,radius,timer,pixmap,world,scene,input){}
     virtual void press();
-    bool canmove;
-    bool func;
 };
 
 class greenbird : public Bird{

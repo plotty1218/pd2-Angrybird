@@ -30,8 +30,8 @@ void MainWindow::showEvent(QShowEvent *)
 
     itemList.push_back(new Land(16,1.6,32,3,QPixmap(":/GROUND.png").scaled(width(),height()/6.0),world,scene));
     itemList.push_back(new Barrier(17,4, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
-    itemList.push_back(new Barrier(30,4, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
-    itemList.push_back(new Barrier(30,6, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
+    itemList.push_back(new Barrier(29,4, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
+    itemList.push_back(new Barrier(29,6, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
     itemList.push_back(new Barrier(5,6, 0.001, 0.001,QPixmap(":/stick.png").scaled(width()/13,height()/6),world,scene));
 
 
@@ -40,6 +40,8 @@ void MainWindow::showEvent(QShowEvent *)
     itemList.push_back(new Stone(17.5f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,2));
     itemList.push_back(new Stone(17.8f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,2));
     pig = new Pig(22.0f,2.7f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,0);
+    pig = new Pig(10.0f,5.0f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,0);
+    pig = new Pig(29.0f,8.0f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,0);
     itemList.push_back(thisbird);
     itemList.push_back(pig);
 
@@ -49,6 +51,7 @@ void MainWindow::showEvent(QShowEvent *)
     score->setPos(100,80);
     score->setPlainText(QString::number(pig->score));
     scene->addItem(score);
+
     // Timer
     connect(&timer,SIGNAL(timeout()),this,SLOT(tick()));
     connect(this,SIGNAL(quitGame()),this,SLOT(QUITSLOT()));
@@ -74,17 +77,21 @@ bool MainWindow::eventFilter(QObject *, QEvent *event)
             thisbird->setLinearVelocity(b2Vec2(12,6));
             thisbird->func = true;
             thisbird->flied = true;
+            thisbird->canmove = false;
         }
     }
     return false;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent* event){
-    if((event->key() == Qt::Key_F && thisbird->func == true)){
-            thisbird->press();
-            thisbird->func = false;
-            thisbird->canmove = false;
+    if((event->key() == Qt::Key_A && thisbird->func == true)){
+        thisbird->press();
+        thisbird->func = false;
+        thisbird->canmove = false;
      }
+    if(event->key() == Qt::Key_S){
+        newbird();
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *)
@@ -125,4 +132,9 @@ void MainWindow::newbird()
         break;
     }
 
+}
+
+void MainWindow::deletepig()
+{
+    delete pig;
 }

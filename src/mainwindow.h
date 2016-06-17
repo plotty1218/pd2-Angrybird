@@ -26,8 +26,9 @@ public:
       bodyUserData* body1 = (bodyUserData*)contact->GetFixtureA()->GetBody()->GetUserData();
       bodyUserData* body2 = (bodyUserData*)contact->GetFixtureB()->GetBody()->GetUserData();
      if ( (body1->label == 0  && body2->label ==1)||(body1->label == 1  && body2->label == 0 )||
-          (body1->label == 2  && body2->label == 0 )||(body1->label == 0  && body2->label == 2 ) )
-          pig->startContact();
+          (body1->label == 2  && body2->label == 0 )||(body1->label == 0  && body2->label == 2 ) ){
+            pig->startContact();
+     }
     }
      void EndContact(b2Contact* contact) {
           //check if fixture A was a bird
@@ -51,6 +52,8 @@ public:
     bool eventFilter(QObject *,QEvent *event);
     void keyPressEvent(QKeyEvent* event);
     void closeEvent(QCloseEvent *);
+    void deletepig();
+public slots:
     void newbird();
 
 signals:
@@ -61,6 +64,7 @@ private slots:
     void tick();
     // For debug slot
     void QUITSLOT();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
@@ -76,5 +80,4 @@ private:
     QGraphicsTextItem* score;
 
 };
-
 #endif // MAINWINDOW_H

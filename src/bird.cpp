@@ -51,6 +51,9 @@ void bluebird::press()
 
 void greenbird::press()
 {
-    this->setLinearVelocity(b2Vec2(5,5));
+    this->setLinearVelocity(b2Vec2(-5,5));
 }
 
+void redbird::press()
+{
+}
