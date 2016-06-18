@@ -17,30 +17,7 @@
 namespace Ui {
 class MainWindow;
 }
-class MyContactListener : public b2ContactListener
-  {
-public:
-    MyContactListener(Pig* pig):pig(pig){}
-    void BeginContact(b2Contact* contact) {
-      //check if fixture A was a bird
-      bodyUserData* body1 = (bodyUserData*)contact->GetFixtureA()->GetBody()->GetUserData();
-      bodyUserData* body2 = (bodyUserData*)contact->GetFixtureB()->GetBody()->GetUserData();
-     if ( (body1->label == 0  && body2->label ==1)||(body1->label == 1  && body2->label == 0 )||
-          (body1->label == 2  && body2->label == 0 )||(body1->label == 0  && body2->label == 2 ) ){
-            pig->startContact();
-     }
-    }
-     void EndContact(b2Contact* contact) {
-          //check if fixture A was a bird
-          bodyUserData* body1 = (bodyUserData*)contact->GetFixtureA()->GetBody()->GetUserData();
-          bodyUserData* body2 = (bodyUserData*)contact->GetFixtureB()->GetBody()->GetUserData();
-         if ( (body1->label == 0  && body2->label ==1)||(body1->label == 1  && body2->label == 0)||
-              (body1->label == 2  && body2->label ==0)||(body1->label == 0  && body2->label ==2) )
-              pig->endContact();
-    }
-private:
-    Pig * pig ;
-};
+class MyContactListener;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -73,11 +50,49 @@ private:
     QTimer timer;
     Bird* thisbird;
     int count;
-    Pig* pig;
+    Pig * pig1 ;
+    Pig * pig2 ;
+    Pig * pig3 ;
     b2Fixture* GetFixtureA();
     b2Fixture* GetFixtureB();
     MyContactListener *myContactListenerInstance;
     QGraphicsTextItem* score;
+    bool check1;
+    bool check2;
+    bool check3;
 
+};
+class MyContactListener : public b2ContactListener
+  {
+public:
+    MyContactListener(Pig* pig1,Pig* pig2,Pig* pig3):pig1(pig1),pig2(pig2),pig3(pig3){}
+    void BeginContact(b2Contact* contact) {
+      //check if fixture A was a bird
+      bodyUserData* body1 = (bodyUserData*)contact->GetFixtureA()->GetBody()->GetUserData();
+      bodyUserData* body2 = (bodyUserData*)contact->GetFixtureB()->GetBody()->GetUserData();
+     if ( (body1->label == 0  && body2->label ==1)||(body1->label == 1  && body2->label == 0 )||
+          (body1->label == 4  && body2->label ==1)||(body1->label == 1  && body2->label == 4 )){
+            pig1->startContact();
+     }else if ( (body1->label == 2  && body2->label ==0)||(body1->label == 0  && body2->label == 2 )||
+                (body1->label == 2  && body2->label ==4)||(body1->label == 4  && body2->label == 2 )){
+            pig2->startContact();
+     }else if ( (body1->label == 3  && body2->label == 0 )||(body1->label == 0  && body2->label == 3 )||
+                (body1->label == 3  && body2->label == 4 )||(body1->label == 4  && body2->label == 3 )){
+            pig3->startContact();
+     }
+    }
+/*     void EndContact(b2Contact* contact) {
+          //check if fixture A was a bird
+          bodyUserData* body1 = (bodyUserData*)contact->GetFixtureA()->GetBody()->GetUserData();
+          bodyUserData* body2 = (bodyUserData*)contact->GetFixtureB()->GetBody()->GetUserData();
+         if ( (body1->label == 0  && body2->label ==1)||(body1->label == 1  && body2->label == 0)||
+              (body1->label == 2  && body2->label ==0)||(body1->label == 0  && body2->label ==2) )
+              pig->endContact();
+    }
+*/
+private:
+    Pig * pig1 ;
+    Pig * pig2 ;
+    Pig * pig3 ;
 };
 #endif // MAINWINDOW_H

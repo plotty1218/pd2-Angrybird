@@ -160,6 +160,7 @@ debug/qrc_res.cpp: res.qrc \
 		yellowbird.png \
 		greenbird.png \
 		redbird.png \
+		stone.png \
 		bluebird.png \
 		back.png \
 		barrier3.png \
@@ -336,6 +337,9 @@ debug/moc_mainwindow.cpp: ../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QMai
 		land.h \
 		bird.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtGui/QPixmap \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QLabel \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qlabel.h \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qframe.h \
 		mainwindow.h
 	C:\Qt\Qt5.6.0\5.6\mingw49_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.6.0/5.6/mingw49_32/mkspecs/win32-g++ -IC:/pd2-Angrybird/src -IC:/Qt/Qt5.6.0/5.6/mingw49_32/include -IC:/Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets -IC:/Qt/Qt5.6.0/5.6/mingw49_32/include/QtGui -IC:/Qt/Qt5.6.0/5.6/mingw49_32/include/QtANGLE -IC:/Qt/Qt5.6.0/5.6/mingw49_32/include/QtCore mainwindow.h -o debug\moc_mainwindow.cpp
 
@@ -666,6 +670,9 @@ debug/main.o: main.cpp mainwindow.h \
 		land.h \
 		bird.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtGui/QPixmap \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QLabel \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qlabel.h \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qframe.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QApplication \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qapplication.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtCore/qcoreapplication.h \
@@ -841,6 +848,9 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		land.h \
 		bird.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtGui/QPixmap \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QLabel \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qlabel.h \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qframe.h \
 		ui_mainwindow.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtCore/QVariant \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QAction \
@@ -858,7 +868,6 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qgraphicsview.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qscrollarea.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qabstractscrollarea.h \
-		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qframe.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QHBoxLayout \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qboxlayout.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qlayout.h \
@@ -879,7 +888,11 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qstyle.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qtabbar.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qrubberband.h \
-		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QWidget
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QWidget \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QGraphicsTextItem \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QPushButton \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qpushbutton.h \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qabstractbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o mainwindow.cpp
 
 debug/gameitem.o: gameitem.cpp gameitem.h \
@@ -1167,9 +1180,9 @@ debug/bird.o: bird.cpp bird.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtCore/QTimer \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtCore/qtimer.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtCore/qbasictimer.h \
-		mainwindow.h \
-		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QMainWindow \
-		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qmainwindow.h \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QLabel \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qlabel.h \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qframe.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qwidget.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtGui/qpalette.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qsizepolicy.h \
@@ -1182,6 +1195,9 @@ debug/bird.o: bird.cpp bird.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtCore/qfiledevice.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtGui/qvector2d.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtGui/qtouchdevice.h \
+		mainwindow.h \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/QMainWindow \
+		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qmainwindow.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtWidgets/qtabwidget.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtGui/qicon.h \
 		../../Qt/Qt5.6.0/5.6/mingw49_32/include/QtCore/QList \

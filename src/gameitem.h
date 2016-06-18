@@ -14,6 +14,7 @@ public:
     GameItem(b2World *world);
     ~GameItem();
     static void setGlobalSize(QSizeF worldsize, QSizeF windowsize);
+    bool m_contacting ;
 
 public slots:
     void paint();
