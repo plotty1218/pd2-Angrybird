@@ -52,12 +52,6 @@ public:
             m_contacting = true;
          }
     }
-/*    void endContact(){
-        if(m_contacting == true ){
-            m_contacting = false;
-         }
-    }
-*/
     bool m_contacting ;
     int score;
 

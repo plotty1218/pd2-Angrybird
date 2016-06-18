@@ -9,7 +9,7 @@
 #include <Box2D/Box2D.h>
 #include <QMouseEvent>
 #include <iostream>
-
+#include <QPushButton>
 #include <gameitem.h>
 #include <land.h>
 #include <bird.h>
@@ -41,6 +41,8 @@ private slots:
     void tick();
     // For debug slot
     void QUITSLOT();
+    void quitgame();
+    void restartgame();
 
 private:
     Ui::MainWindow *ui;
@@ -60,6 +62,8 @@ private:
     bool check1;
     bool check2;
     bool check3;
+    QPushButton *quit;
+    QPushButton *restart;
 
 };
 class MyContactListener : public b2ContactListener
@@ -81,15 +85,6 @@ public:
             pig3->startContact();
      }
     }
-/*     void EndContact(b2Contact* contact) {
-          //check if fixture A was a bird
-          bodyUserData* body1 = (bodyUserData*)contact->GetFixtureA()->GetBody()->GetUserData();
-          bodyUserData* body2 = (bodyUserData*)contact->GetFixtureB()->GetBody()->GetUserData();
-         if ( (body1->label == 0  && body2->label ==1)||(body1->label == 1  && body2->label == 0)||
-              (body1->label == 2  && body2->label ==0)||(body1->label == 0  && body2->label ==2) )
-              pig->endContact();
-    }
-*/
 private:
     Pig * pig1 ;
     Pig * pig2 ;

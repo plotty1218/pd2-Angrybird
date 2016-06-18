@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include <unistd.h>
 #include <QGraphicsTextItem>
-#include<QFont>
+#include <QFont>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -39,7 +39,8 @@ void MainWindow::showEvent(QShowEvent *)
 
 
     // Create bird (You can edit here 出發x,出發y,地板高,高,寬)
-    thisbird= new yellowbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/yellowbird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
+    //thisbird= new yellowbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/yellowbird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
+    newbird();
     itemList.push_back(new Stone(17.5f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,4));
     itemList.push_back(new Stone(17.8f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,4));
     pig1 = new Pig(22.0f,2.7f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,1);
@@ -53,17 +54,30 @@ void MainWindow::showEvent(QShowEvent *)
     myContactListenerInstance = new MyContactListener(pig1,pig2,pig3);
     world->SetContactListener(myContactListenerInstance);
     score = new QGraphicsTextItem;
-    score->setPos(50,20);
+    score->setPos(50,35);
     score->setPlainText(QString::number(0));
     score->setFont(QFont("Courier", 30, QFont::Bold));
     scene->addItem(score);
+
+    // Create the button, make "this" the parent
+    quit = new QPushButton(this);
+    quit->setGeometry(QRect(QPoint(50, 10),QSize(60, 20)));
+    quit->setText("Quitgame");
+    quit->show();
+    connect(quit, SIGNAL (released()), this, SLOT (quitgame()));
+    restart = new QPushButton(this);
+    restart->setGeometry(QRect(QPoint(120, 10),QSize(60, 20)));
+    restart->setText("Restart");
+    restart->show();
+    connect(restart, SIGNAL (released()), this, SLOT (restartgame()));
 
     // Timer
     connect(&timer,SIGNAL(timeout()),this,SLOT(tick()));
     connect(this,SIGNAL(quitGame()),this,SLOT(QUITSLOT()));
     timer.start(100/6);
-}
 
+
+}
 bool MainWindow::eventFilter(QObject *, QEvent *event)
 {
     // Hint: Notice the Number of every event!
@@ -110,7 +124,9 @@ void MainWindow::tick()
 {
 
     world->Step(1.0/60.0,6,2);
-    score->setPlainText(QString::number((pig1->score)+(pig2->score)+(pig3->score)));
+    int total;
+    total=(pig1->score)+(pig2->score)+(pig3->score);
+    score->setPlainText(QString::number(total));
     if(pig1->m_contacting == true && check1 == true){
         check1 = false;
         delete pig1;
@@ -134,9 +150,10 @@ void MainWindow::QUITSLOT()
 
 void MainWindow::newbird()
 {
-    count++;
-
     switch (count) {
+    case 1:
+        thisbird = new yellowbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/yellowbird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
+        break;
     case 2:
         delete thisbird;
         thisbird = new redbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/redbird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
@@ -150,5 +167,37 @@ void MainWindow::newbird()
         thisbird = new greenbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/greenbird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
         break;
     }
+    count++;
+}
+
+void MainWindow::quitgame()
+{
+    emit quitGame();
+    this->close();
+}
+
+void MainWindow::restartgame()
+{
+    if(check1==false){
+        pig1 = new Pig(22.0f,2.7f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,1);
+        itemList.push_back(pig1);
+        check1=true;
+    }
+    if(check2==false){
+        pig2 = new Pig(10.0f,5.0f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,2);
+        itemList.push_back(pig2);
+        check2=true;
+    }
+    if(check3==false){
+        pig3 = new Pig(29.0f,8.0f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,3);
+        itemList.push_back(pig3);
+        check3=true;
+    }
+    delete myContactListenerInstance;
+    myContactListenerInstance = new MyContactListener(pig1,pig2,pig3);
+    world->SetContactListener(myContactListenerInstance);
+    delete thisbird;
+    count=1;
+    newbird();
 
 }
