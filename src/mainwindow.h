@@ -96,13 +96,10 @@ public:
             }
         }
     }
-    int getScore(){
-        return score;
-    }
+    int score;
 private:
     Pig * pig1 ;
     Pig * pig2 ;
     Pig * pig3 ;
-    int score;
 };
 #endif // MAINWINDOW_H

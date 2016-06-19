@@ -38,7 +38,6 @@ void MainWindow::showEvent(QShowEvent *)
     itemList.push_back(new Land(29,4, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene,false));
     itemList.push_back(new Land(29,6, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene,false));
     itemList.push_back(new Land(5,6,0.01,0.01,QPixmap(":/stick.png").scaled(width()/13,height()/6),world,scene,false));
-    // Create bird (You can edit here 出發x,出發y,地板高,高,寬)
     newbird();
     stone1 = new Stone(0,17.5f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene);
     stone2 = new Stone(0,17.8f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene);
@@ -106,7 +105,7 @@ bool MainWindow::eventFilter(QObject *, QEvent *event)
             x2 = thisbird->getPositionX();
             y2 = thisbird->getPositionY();
             thisbird->g_body->SetGravityScale(1);
-            thisbird->setLinearVelocity(b2Vec2(20-1.1*x2,15-1.1*y2));
+            thisbird->setLinearVelocity(b2Vec2(20-x2,15-y2));
             thisbird->func = true;
             thisbird->flied = true;
             thisbird->canmove = false;
@@ -135,7 +134,7 @@ void MainWindow::closeEvent(QCloseEvent *)
 void MainWindow::tick()
 {
     world->Step(1.0/60.0,6,2);
-    score->setPlainText(QString::number(myContactListenerInstance->getScore()));
+    score->setPlainText(QString::number(myContactListenerInstance->score));
     if(pig1->m_contacting == true && check1 == true){
         check1 = false;
         delete pig1;
@@ -149,7 +148,7 @@ void MainWindow::tick()
         delete pig3;
     }
     if(thisbird->bluebirdpress==true){
-       // thisbird->bluebirdpress=false;
+        thisbird->bluebirdpress=false;
         checkblue = true;
         bluex1 = thisbird->getPositionX();
         bluey1 = thisbird->getPositionY();
