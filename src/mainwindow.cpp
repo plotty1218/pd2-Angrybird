@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <QGraphicsTextItem>
 #include <QFont>
+#include <QCursor>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -36,13 +37,13 @@ void MainWindow::showEvent(QShowEvent *)
     itemList.push_back(new Barrier(29,4, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
     itemList.push_back(new Barrier(29,6, 2.6, 2.4,QPixmap(":/barrier2.png").scaled(width()/8,height()/9),world,scene));
     itemList.push_back(new Barrier(5,6, 0.001, 0.001,QPixmap(":/stick.png").scaled(width()/13,height()/6),world,scene));
-
-
     // Create bird (You can edit here 出發x,出發y,地板高,高,寬)
     //thisbird= new yellowbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/yellowbird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
     newbird();
-    itemList.push_back(new Stone(17.5f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,4));
-    itemList.push_back(new Stone(17.8f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,4));
+    stone1 = new Stone(17.5f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,4);
+    stone2 = new Stone(17.8f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,4);
+    itemList.push_back(stone1);
+    itemList.push_back(stone2);
     pig1 = new Pig(22.0f,2.7f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,1);
     pig2 = new Pig(10.0f,5.0f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,2);
     pig3 = new Pig(29.0f,8.0f,0.40f,&timer,QPixmap(":/pig.png").scaled(width()/16.0,height()/10.0),world,scene,3);
@@ -88,13 +89,22 @@ bool MainWindow::eventFilter(QObject *, QEvent *event)
     }
     if(event->type() == QEvent::MouseMove)
     {
-        /* TODO : add your code here */
-        //std::cout << "Move !" << std::endl ;
+        if(thisbird->canmove==true){
+            p = QCursor::pos();
+            x1 = p.x()*(thisbird->g_worldsize.width()/thisbird->g_windowsize.width())-8.0;
+            y1 = (thisbird->g_worldsize.height())- p.y() *((thisbird->g_worldsize.height()/thisbird->g_windowsize.height()))+3.5;
+            //change the starting position and angle
+            thisbird->g_body->SetTransform(b2Vec2(x1,y1),0);
+            thisbird->g_body->SetGravityScale(-0.4);
+        }
     }
     if(event->type() == QEvent::MouseButtonRelease)
     {
         if(thisbird->canmove == true){
-            thisbird->setLinearVelocity(b2Vec2(16,8));
+            x2 = thisbird->getPositionX();
+            y2 = thisbird->getPositionY();
+            thisbird->g_body->SetGravityScale(1);
+            thisbird->setLinearVelocity(b2Vec2(20-1.1*x2,15-1.1*y2));
             thisbird->func = true;
             thisbird->flied = true;
             thisbird->canmove = false;
@@ -122,11 +132,8 @@ void MainWindow::closeEvent(QCloseEvent *)
 
 void MainWindow::tick()
 {
-
     world->Step(1.0/60.0,6,2);
-    int total;
-    total=(pig1->score)+(pig2->score)+(pig3->score);
-    score->setPlainText(QString::number(total));
+    score->setPlainText(QString::number(myContactListenerInstance->getScore()));
     if(pig1->m_contacting == true && check1 == true){
         check1 = false;
         delete pig1;
@@ -199,5 +206,10 @@ void MainWindow::restartgame()
     delete thisbird;
     count=1;
     newbird();
-
+    delete stone1;
+    delete stone2;
+    stone1 = new Stone(17.5f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,4);
+    stone2 = new Stone(17.8f,4.5f,0.40f,&timer,QPixmap(":/stone.png").scaled(width()/16.0,height()/10.0),world,scene,4);
+    itemList.push_back(stone1);
+    itemList.push_back(stone2);
 }

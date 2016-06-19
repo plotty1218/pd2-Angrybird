@@ -43,18 +43,14 @@ public:
     Pig(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
         Bird(x,y,radius,timer,pixmap,world,scene,input){
             m_contacting = false;
-            score = 0;
     }
     virtual void press(){}
     void startContact(){
         if(m_contacting == false){
-            score +=1000;
             m_contacting = true;
          }
     }
     bool m_contacting ;
-    int score;
-
 };
 
 class redbird : public Bird{

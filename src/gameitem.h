@@ -9,6 +9,7 @@
 
 class GameItem : public QObject
 {
+    friend class MainWindow;
     Q_OBJECT
 public:
     GameItem(b2World *world);

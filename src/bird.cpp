@@ -38,7 +38,12 @@ void Bird::setLinearVelocity(b2Vec2 velocity)
 {
     g_body->SetLinearVelocity(velocity);
 }
-
+double Bird::getPositionX(){
+    return g_body->GetPosition().x;
+}
+double Bird::getPositionY(){
+    return g_body->GetPosition().y;
+}
 void yellowbird::press()
 {
     setLinearVelocity(b2Vec2(5,-5));
