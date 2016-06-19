@@ -68,31 +68,33 @@ private:
     Stone* stone2;
     QPoint p;
     double x1,y1,x2,y2,bluex1,bluey1;
+    bool checkblue;
 
 };
-class MyContactListener : public b2ContactListener
-  {
+struct bodyUserData{
+    bool ispig;
+    int ID;
+};
+class MyContactListener : public b2ContactListener{
 public:
     MyContactListener(Pig* pig1,Pig* pig2,Pig* pig3):pig1(pig1),pig2(pig2),pig3(pig3){
         score=0;
     }
     void BeginContact(b2Contact* contact) {
-      //check if fixture A was a bird
-      bodyUserData* body1 = (bodyUserData*)contact->GetFixtureA()->GetBody()->GetUserData();
-      bodyUserData* body2 = (bodyUserData*)contact->GetFixtureB()->GetBody()->GetUserData();
-     if ( (body1->label == 0  && body2->label ==1)||(body1->label == 1  && body2->label == 0 )||
-          (body1->label == 4  && body2->label ==1)||(body1->label == 1  && body2->label == 4 )){
-            pig1->startContact();
-            score++;
-     }else if ( (body1->label == 2  && body2->label ==0)||(body1->label == 0  && body2->label == 2 )||
-                (body1->label == 2  && body2->label ==4)||(body1->label == 4  && body2->label == 2 )){
-            pig2->startContact();
-            score++;
-     }else if ( (body1->label == 3  && body2->label == 0 )||(body1->label == 0  && body2->label == 3 )||
-                (body1->label == 3  && body2->label == 4 )||(body1->label == 4  && body2->label == 3 )){
-            pig3->startContact();
-            score++;
-     }
+        bodyUserData* item1 = (bodyUserData*) contact->GetFixtureA()->GetBody()->GetUserData();
+        bodyUserData* item2 = (bodyUserData*) contact->GetFixtureB()->GetBody()->GetUserData();
+        if(item1->ispig==true && item2->ispig==true){
+            if(item1->ID==1 && item2->ID ==0 || item2->ID==1  && item1->ID==0){
+                pig1->startContact();
+                score++;
+            }else if(item1->ID==2 && item2->ID ==0 || item2->ID==2  && item1->ID==0){
+                pig2->startContact();
+                score++;
+            }else if(item1->ID==3 && item2->ID ==0 || item2->ID==3  && item1->ID==0){
+                pig3->startContact();
+                score++;
+            }
+        }
     }
     int getScore(){
         return score;

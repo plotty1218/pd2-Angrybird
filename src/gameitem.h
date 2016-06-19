@@ -15,11 +15,9 @@ public:
     GameItem(b2World *world);
     ~GameItem();
     static void setGlobalSize(QSizeF worldsize, QSizeF windowsize);
-    bool m_contacting ;
 
 public slots:
     void paint();
-    // TODO virtual void collide();
 
 protected:
     b2Body *g_body;

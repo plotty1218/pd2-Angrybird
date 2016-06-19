@@ -1,6 +1,6 @@
 #include "land.h"
 
-Land::Land(float x, float y, float w, float h, QPixmap pixmap, b2World *world, QGraphicsScene *scene):GameItem(world)
+Land::Land(float x, float y, float w, float h, QPixmap pixmap, b2World *world, QGraphicsScene *scene,bool ispig):GameItem(world)
 {
     // Set pixmap
     g_pixmap.setPixmap(pixmap);

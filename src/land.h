@@ -7,12 +7,7 @@
 class Land : public GameItem
 {
 public:
-    Land(float x, float y, float w, float h, QPixmap pixmap, b2World *world, QGraphicsScene *scene);
-};
-class Barrier : public Land{
-public:
-    Barrier(float x, float y, float w, float h, QPixmap pixmap, b2World *world, QGraphicsScene *scene):
-        Land(x,y,w,h,pixmap,world,scene){}
+    Land(float x, float y, float w, float h, QPixmap pixmap, b2World *world, QGraphicsScene *scene,bool ispig);
 };
 
 #endif // LAND_H

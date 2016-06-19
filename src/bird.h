@@ -11,77 +11,71 @@
 #define BIRD_DENSITY 10.0f
 #define BIRD_FRICTION 0.2f
 #define BIRD_RESTITUTION 0.5f
-struct bodyUserData{
-    int label;
-};
+
 class Bird : public GameItem
 {
+    friend class MainWindow;
 public:
-    Bird(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input);
+    Bird(int id,float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene);
     void setLinearVelocity(b2Vec2 velocity);
     virtual void press()=0;
     double getPositionX();
     double getPositionY();
-    double  getVelocityX();
-    double  getVelocityY();
     void deleteblue();
+    bool bluebirdpress;
+private:
     bool canmove;
     bool func;
     bool flied;
     Bird* bluebird1;
     Bird* bluebird2;
-    double x1,y1;
-    bool bluebirdpress;
 };
 
 class Stone : public Bird{
 public:
-    Stone(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
-        Bird(x,y,radius,timer,pixmap,world,scene,input){}
+    Stone(int id,float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene):
+        Bird(id,x,y,radius,timer,pixmap,world,scene){}
     virtual void press(){}
 };
 
 class Pig : public Bird{
 public:
-    Pig(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
-        Bird(x,y,radius,timer,pixmap,world,scene,input){
-            m_contacting = false;
+    Pig(int id,float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene):
+        Bird(id,x,y,radius,timer,pixmap,world,scene){
+        m_contacting = false;
     }
     virtual void press(){}
-    void startContact(){
-        if(m_contacting == false){
-            m_contacting = true;
-         }
-    }
+    void startContact();
     bool m_contacting ;
 };
 
 class redbird : public Bird{
 public:
-    redbird(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
-        Bird(x,y,radius,timer,pixmap,world,scene,input){}
+    redbird(int id,float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene):
+        Bird(id,x,y,radius,timer,pixmap,world,scene){}
     virtual void press();
 };
 
 class yellowbird : public Bird{
 public:
-    yellowbird(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
-        Bird(x,y,radius,timer,pixmap,world,scene,input){}
+    yellowbird(int id,float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene):
+        Bird(id,x,y,radius,timer,pixmap,world,scene){}
     virtual void press();
 };
 
 class greenbird : public Bird{
 public:
-    greenbird(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
-        Bird(x,y,radius,timer,pixmap,world,scene,input){}
+    greenbird(int id,float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene):
+        Bird(id,x,y,radius,timer,pixmap,world,scene){}
     virtual void press();
 };
 
 class bluebird : public Bird{
 public:
-    bluebird(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
-        Bird(x,y,radius,timer,pixmap,world,scene,input){}
+    bluebird(int id,float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene):
+        Bird(id,x,y,radius,timer,pixmap,world,scene){}
     virtual void press();
+
 };
 
 #endif // BIRD_H
