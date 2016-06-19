@@ -95,7 +95,7 @@ bool MainWindow::eventFilter(QObject *, QEvent *event)
             y1 = (thisbird->g_worldsize.height())- p.y() *((thisbird->g_worldsize.height()/thisbird->g_windowsize.height()))+3.5;
             //change the starting position and angle
             thisbird->g_body->SetTransform(b2Vec2(x1,y1),0);
-            thisbird->g_body->SetGravityScale(-0.4);
+            thisbird->g_body->SetGravityScale(0);
         }
     }
     if(event->type() == QEvent::MouseButtonRelease)
@@ -146,6 +146,15 @@ void MainWindow::tick()
         check3 = false;
         delete pig3;
     }
+    if(thisbird->bluebirdpress==true){
+        thisbird->bluebirdpress=false;
+        bluex1 = thisbird->getPositionX();
+        bluey1 = thisbird->getPositionY();
+        thisbird->bluebird1 = new bluebird(bluex1,bluey1,0.40f,&timer,QPixmap(":/bluebird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
+        thisbird->bluebird2 = new bluebird(bluex1,bluey1,0.40f,&timer,QPixmap(":/bluebird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
+        thisbird->bluebird1->setLinearVelocity(b2Vec2(3,0));
+        thisbird->bluebird2->setLinearVelocity(b2Vec2(5,-1));
+     }
     scene->update();
 }
 
@@ -170,6 +179,7 @@ void MainWindow::newbird()
         thisbird = new bluebird(5.0f,10.0f,0.40f,&timer,QPixmap(":/bluebird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
         break;
     case 4:
+        thisbird->deleteblue();
         delete thisbird;
         thisbird = new greenbird(5.0f,10.0f,0.40f,&timer,QPixmap(":/greenbird.png").scaled(width()/16.0,height()/10.0),world,scene,0);
         break;

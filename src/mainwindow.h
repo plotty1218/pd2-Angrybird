@@ -67,7 +67,7 @@ private:
     Stone* stone1;
     Stone* stone2;
     QPoint p;
-    double x1,y1,x2,y2;
+    double x1,y1,x2,y2,bluex1,bluey1;
 
 };
 class MyContactListener : public b2ContactListener

@@ -24,10 +24,14 @@ public:
     double getPositionY();
     double  getVelocityX();
     double  getVelocityY();
+    void deleteblue();
     bool canmove;
     bool func;
     bool flied;
-
+    Bird* bluebird1;
+    Bird* bluebird2;
+    double x1,y1;
+    bool bluebirdpress;
 };
 
 class Stone : public Bird{
@@ -35,7 +39,6 @@ public:
     Stone(float x, float y, float radius, QTimer *timer, QPixmap pixmap, b2World *world, QGraphicsScene *scene,int input):
         Bird(x,y,radius,timer,pixmap,world,scene,input){}
     virtual void press(){}
-
 };
 
 class Pig : public Bird{
